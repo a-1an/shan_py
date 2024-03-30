@@ -1,0 +1,21 @@
+name: flutter_app_1
+description: A Flutter app for detecting diseases in paddy fields
+version: 1.0.0
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  image_picker: ^0.8.4+4  # Add the image_picker plugin for picking images
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/paddy_image.jpg
