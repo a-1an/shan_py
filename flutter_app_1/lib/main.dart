@@ -1,9 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'dart:convert';
+
+import 'second_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
+        '/second': (context) => SecondPage(),
       },
     );
   }
@@ -30,15 +32,24 @@ class HomePage extends StatelessWidget {
     if (pickedFile != null) {
       // Image picked successfully, print the file path
       print('Picked image path: ${pickedFile.path}');
-      
+
       // Proceed to upload the image to the server
       File imageFile = File(pickedFile.path);
 
       // Prepare the multipart request
-      var request = http.MultipartRequest('POST', Uri.parse('https://1135-34-138-82-156.ngrok-free.app/upload'));
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('https://830e-34-16-178-115.ngrok-free.app/upload'),
+      );
 
       // Add the image file to the request
-      request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'file',
+          imageFile.path,
+          contentType: MediaType('image', 'png'),
+        ),
+      );
 
       // Send the request
       var response = await request.send();
@@ -46,7 +57,20 @@ class HomePage extends StatelessWidget {
       // Check the response status
       if (response.statusCode == 200) {
         // Image successfully uploaded
-        print('Image uploaded successfully');
+        // Parse the response JSON
+        final responseBody = await response.stream.bytesToString();
+        final parsedResponse = jsonDecode(responseBody);
+
+        // Extract predicted disease from the response
+        final predictedDisease = parsedResponse['Predicted_disease'];
+
+        // Navigate to the second page and pass the predicted disease as argument
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SecondPage(predictedDisease: predictedDisease),
+          ),
+        );
       } else {
         // Handle upload error
         print('Error uploading image: ${response.reasonPhrase}');
@@ -128,7 +152,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Color(0xFFA0C056)),
+                    backgroundColor:
+                        MaterialStateProperty.all(Color(0xFFA0C056)),
                     padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
                     ),
@@ -137,7 +162,8 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    shadowColor: MaterialStateProperty.all(Colors.black.withOpacity(0.5)),
+                    shadowColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.5)),
                     elevation: MaterialStateProperty.all(5),
                   ),
                 ),

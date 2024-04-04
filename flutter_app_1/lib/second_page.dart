@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatelessWidget {
+  final String predictedDisease;
+
+  SecondPage({required this.predictedDisease});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +44,7 @@ class SecondPage extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        'John Doe',
+                        predictedDisease,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
