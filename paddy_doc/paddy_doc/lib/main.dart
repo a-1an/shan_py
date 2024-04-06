@@ -1,3 +1,4 @@
+import 'dart:convert'; // Add this line to import the dart:convert library
 import 'package:flutter/material.dart';
 import 'package:paddy_doc/second_page.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +30,7 @@ class HomePage extends StatelessWidget {
       // Prepare the multipart request
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('https://3add-34-106-111-180.ngrok-free.app/upload'),
+        Uri.parse('https://83c6-35-229-162-197.ngrok-free.app/upload'),
       );
 
       // Infer the file name and type from the picked file path
@@ -52,11 +53,19 @@ class HomePage extends StatelessWidget {
       var responseBody = await response.stream.bytesToString();
       print('Response: $responseBody');
 
+      // Extract the predicted disease value from the API response
+      final jsonResponse = jsonDecode(responseBody);
+      final List<dynamic> predictedDiseaseList = jsonResponse['Predicted_disease'];
+      final String predictedDisease = predictedDiseaseList.isNotEmpty ? predictedDiseaseList.first : '';
+
       // Navigate to the second page
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SecondPage(imagePath: pickedFile.path),
+          builder: (context) => SecondPage(
+            imagePath: pickedFile.path,
+            predictedDisease: predictedDisease,
+          ),
         ),
       );
     } else {
@@ -135,8 +144,8 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    shadowColor: MaterialStateProperty.all(
-                        Colors.black.withOpacity(0.5)),
+                    shadowColor:
+                        MaterialStateProperty.all(Colors.black.withOpacity(0.5)),
                     elevation: MaterialStateProperty.all(5),
                   ),
                 ),

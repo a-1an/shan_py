@@ -1,11 +1,11 @@
-import 'dart:io'; // Import the dart:io library
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatelessWidget {
   final String imagePath;
+  final String predictedDisease;
 
-  SecondPage({required this.imagePath});
+  SecondPage({required this.imagePath, required this.predictedDisease});
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +34,19 @@ class SecondPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Color(0xFFF7F8DF).withOpacity(0.9), // Soften the background color
+                color: Color(0xFFF7F8DF).withOpacity(0.9),
                 child: Container(
                   width: double.infinity,
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       Image.file(
-                        File(imagePath), // Use the File class to load the image
+                        File(imagePath),
                         height: 150.0,
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        'John Doe',
+                        predictedDisease,
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -62,7 +62,7 @@ class SecondPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Color(0xFFF7F8DF).withOpacity(0.9), // Soften the background color
+                color: Color(0xFFF7F8DF).withOpacity(0.9),
                 child: Container(
                   width: double.infinity,
                   padding: EdgeInsets.all(16.0),
