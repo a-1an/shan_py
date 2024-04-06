@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -56,7 +55,9 @@ class HomePage extends StatelessWidget {
       // Navigate to the second page
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SecondPage()),
+        MaterialPageRoute(
+          builder: (context) => SecondPage(imagePath: pickedFile.path),
+        ),
       );
     } else {
       // Handle case when image picking is canceled
@@ -134,8 +135,8 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    shadowColor:
-                        MaterialStateProperty.all(Colors.black.withOpacity(0.5)),
+                    shadowColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.5)),
                     elevation: MaterialStateProperty.all(5),
                   ),
                 ),

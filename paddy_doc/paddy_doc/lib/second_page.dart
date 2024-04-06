@@ -1,12 +1,18 @@
+import 'dart:io'; // Import the dart:io library
+
 import 'package:flutter/material.dart';
 
 class SecondPage extends StatelessWidget {
+  final String imagePath;
+
+  SecondPage({required this.imagePath});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Second Page',
+          'Result',
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontSize: 24.0,
@@ -34,8 +40,8 @@ class SecondPage extends StatelessWidget {
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Image.asset(
-                        'assets/bacterial_blight.jpg',
+                      Image.file(
+                        File(imagePath), // Use the File class to load the image
                         height: 150.0,
                       ),
                       SizedBox(height: 10.0),
