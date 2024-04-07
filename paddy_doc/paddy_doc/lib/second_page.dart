@@ -7,8 +7,16 @@ class SecondPage extends StatelessWidget {
 
   SecondPage({required this.imagePath, required this.predictedDisease});
 
+  // Create a dictionary with the key-value pairs for disease remedies
+  final Map<String, String> diseaseRemedies = {
+    'blast': 'Test remedy',
+  };
+
   @override
   Widget build(BuildContext context) {
+    // Get the remedy for the predicted disease
+    String remedy = diseaseRemedies[predictedDisease.toLowerCase()] ?? 'Remedy not found';
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -70,7 +78,7 @@ class SecondPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Lorem Ipsum',
+                        'Remedy',
                         style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
@@ -79,7 +87,7 @@ class SecondPage extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0),
                       Text(
-                        '• Point 1\n• Point 2\n• Point 3',
+                        remedy,
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Color(0xFF333333),

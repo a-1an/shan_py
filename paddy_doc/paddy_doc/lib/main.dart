@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
       // Prepare the multipart request
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('https://83c6-35-229-162-197.ngrok-free.app/upload'),
+        Uri.parse('https://138c-34-132-197-59.ngrok-free.app/upload'),
       );
 
       // Infer the file name and type from the picked file path
