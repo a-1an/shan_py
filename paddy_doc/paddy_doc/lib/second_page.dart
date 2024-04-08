@@ -9,7 +9,67 @@ class SecondPage extends StatelessWidget {
 
   // Create a dictionary with the key-value pairs for disease remedies
   final Map<String, String> diseaseRemedies = {
-    'blast': 'Test remedy',
+    
+    'bacterial_leaf_blight': '''
+    - Plant resistant varieties.
+    - Avoid water stagnation in fields.
+    - Crop rotation.
+    - Use balanced fertilization to avoid excessive nitrogen application.
+  ''',
+  'bacterial_leaf_streak': '''
+    - Practice field sanitation by removing crop residues.
+    - Crop rotation with non-host crops.
+    - Plant resistant varieties if available.
+    - Application of copper-based bactericides.
+  ''',
+  'bacterial_panicle_blight': '''
+    - Use disease-free seeds.
+    - Avoid overhead irrigation to reduce humidity.
+    - Timely application of fungicides.
+    - Crop rotation and field sanitation.
+  ''',
+  'blast': '''
+    - Plant resistant varieties.
+    - Balanced fertilization to avoid excessive nitrogen.
+    - Proper water management to prevent waterlogged conditions.
+    - Application of fungicides at the early stages of the disease.
+  ''',
+  'brown_spot': '''
+    - Crop rotation.
+    - Proper water management.
+    - Use disease-free seeds.
+    - Timely application of fungicides.
+    - Balanced fertilization practices.
+  ''',
+  'dead_heart': '''
+    - Use resistant varieties.
+    - Field sanitation to remove crop residues.
+    - Biological control methods for pest management.
+    - Early detection and removal of affected plants.
+  ''',
+  'downy_mildew': '''
+    - Improve field drainage.
+    - Timely removal of infected plant debris.
+    - Plant resistant varieties.
+    - Fungicide application during the early stages of the disease.
+  ''',
+  'hispa': '''
+    - Use resistant varieties.
+    - Implement biological control methods such as introducing natural predators.
+    - Use chemical control methods if infestation is severe, following recommended dosages.
+  ''',
+  'normal': '''
+    - Practice good agricultural practices to maintain plant health.
+    - Monitor crops regularly for any signs of diseases or pests.
+    - Ensure proper water and nutrient management.
+    - Use disease-resistant or tolerant varieties whenever possible.
+  ''',
+  'tungro': '''
+    - Use resistant varieties.
+    - Control the population of insect vectors through appropriate measures such as insecticides or biological control agents.
+    - Remove and destroy infected plants to prevent further spread.
+    - Planting healthy seedlings and avoiding waterlogging can also help in managing Tungro.
+  '''
   };
 
   @override

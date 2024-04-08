@@ -79,7 +79,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Paddy Disease Detection App',
+          'Paddy Doc ML App', // Changed the app title
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontSize: 24.0,
@@ -109,12 +109,12 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 20.0),
                 Text(
-                  'Hello, Flutter!',
+                  'Upload a picture to detect the paddy disease', // Added the description
                   style: TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
                     color: Colors.black87,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton.icon(
