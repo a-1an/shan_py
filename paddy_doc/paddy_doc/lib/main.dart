@@ -1,9 +1,13 @@
 import 'dart:convert'; // Add this line to import the dart:convert library
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:paddy_doc/history_page.dart';
+import 'package:paddy_doc/model/history_model.dart';
 import 'package:paddy_doc/second_page.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,17 +17,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Paddy Disease Detection App',
       home: HomePage(),
     );
   }
 }
 
+List<HistoryModel> historyList = [];
+
 class HomePage extends StatelessWidget {
+  void addToHistoryList(XFile pickedFile, String date, String disease) async {
+    // getting a directory path for saving
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final String path = appDocDir.path;
+    File file = File(pickedFile.path);
+    // copy the file to a new path
+    final File newImage = await file.copy('$path/image1.png');
+
+    historyList.add(HistoryModel(
+        imagePath: newImage.path,
+        date: DateTime.now().toString(),
+        diseaseIdentified: "jerin thomas"));
+  }
+
   Future<void> _uploadImage(BuildContext context) async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       print('Picked image path: ${pickedFile.path}');
 
@@ -55,9 +75,13 @@ class HomePage extends StatelessWidget {
 
       // Extract the predicted disease value from the API response
       final jsonResponse = jsonDecode(responseBody);
-      final List<dynamic> predictedDiseaseList = jsonResponse['Predicted_disease'];
-      final String predictedDisease = predictedDiseaseList.isNotEmpty ? predictedDiseaseList.first : '';
+      final List<dynamic> predictedDiseaseList =
+          jsonResponse['Predicted_disease'];
+      final String predictedDisease =
+          predictedDiseaseList.isNotEmpty ? predictedDiseaseList.first : '';
 
+      //add this to history
+      addToHistoryList(pickedFile, DateTime.now().toString(), predictedDisease);
       // Navigate to the second page
       Navigator.push(
         context,
@@ -78,18 +102,36 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Paddy Doc ML App', // Changed the app title
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontSize: 24.0,
-            color: Color(0xFFFFFFFF),
+          title: const Text(
+            'Paddy Doc ML App', // Changed the app title
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 24.0,
+              color: Color(0xFFFFFFFF),
+            ),
           ),
-        ),
-        backgroundColor: Color(0xFFA0C056),
-        centerTitle: true,
-      ),
-      backgroundColor: Color(0xFFFFFFFF),
+          backgroundColor: const Color(0xFFA0C056),
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HistoryPage(
+                            historyList: historyList,
+                          )),
+                ),
+                icon: const Icon(
+                  Icons.history,
+                  size: 30,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ]),
+      backgroundColor: const Color(0xFFFFFFFF),
       body: Column(
         children: [
           Container(
@@ -101,7 +143,7 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: Image.asset(
                     'assets/paddy_image.jpg',
                     height: 300.0,
@@ -144,8 +186,8 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    shadowColor:
-                        MaterialStateProperty.all(Colors.black.withOpacity(0.5)),
+                    shadowColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.5)),
                     elevation: MaterialStateProperty.all(5),
                   ),
                 ),
