@@ -27,25 +27,32 @@ class MyApp extends StatelessWidget {
 List<HistoryModel> historyList = [];
 
 class HomePage extends StatelessWidget {
+
+
   void addToHistoryList(XFile pickedFile, String date, String disease) async {
+    
     // getting a directory path for saving
     final appDocDir = await getApplicationDocumentsDirectory();
     final String path = appDocDir.path;
     File file = File(pickedFile.path);
+    
     // copy the file to a new path
     final File newImage = await file.copy('$path/image1.png');
 
     historyList.add(HistoryModel(
         imagePath: newImage.path,
         date: DateTime.now().toString(),
-        diseaseIdentified: "jerin thomas"));
+        diseaseIdentified: disease));
   }
+
+
 
   Future<void> _uploadImage(BuildContext context) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       print('Picked image path: ${pickedFile.path}');
+      
 
       // Prepare the multipart request
       var request = http.MultipartRequest(
