@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paddy_doc/model/history_model.dart';
@@ -76,7 +75,7 @@ class HistoryPage extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.0),
-          Text(
+          Text( "Disease Identified: " +
             historyModel.diseaseIdentified,
             style: TextStyle(fontSize: 16.0),
           ),
